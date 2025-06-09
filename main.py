@@ -1,30 +1,10 @@
 from graphics import Window
-from cell import Cell
+from maze import Maze
 
 def main():
     win = Window(800, 600)
     
-    c1 = Cell(win)
-    c1.has_left_wall = False
-    c1.draw(50, 50, 100, 100)
-
-    c2 = Cell(win)
-    c2.has_right_wall = False
-    c2.draw(50, 200, 100, 250)
-
-    c3 = Cell(win)
-    c3.has_bottom_wall = False
-    c3.draw(225, 225, 250, 250)
-
-    c4 = Cell(win)
-    c4.has_top_wall = False
-    c4.draw(300, 300, 500, 500)
-
-    c4.draw_move(c3, False)
-    c4.draw_move(c1, False)
-    c2.draw_move(c3, True)
-    c1.draw_move(c2, True)
-
+    maze = Maze(10, 10, 29, 39, 20, 20, win)
 
     win.wait_for_close()    
 
