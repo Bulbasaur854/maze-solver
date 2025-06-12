@@ -1,3 +1,4 @@
+import time
 from graphics import Line, Point
 
 class Cell:
@@ -59,3 +60,4 @@ class Cell:
             otherY = (to_cell.__y1 + to_cell.__y2) / 2
             line = Line(Point(selfX, selfY), Point(otherX, otherY))
             self.__win.draw_line(line, fill_color)
+            time.sleep(0.01)
