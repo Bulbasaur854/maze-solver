@@ -14,7 +14,7 @@ At the moment the maze is solved using the Depth-Search First (DFS) algorithm.
     python main.py
     ```
     
-## Coming Soon
+## ⏰ Coming Soon
 
 -    Add other solving algorithms, like breadth-first search or A*
 -    Create a loop to clear and regenerate and solve another maze
