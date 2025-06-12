@@ -2,8 +2,10 @@ from graphics import Window
 from maze import Maze
 
 def main():
-    num_rows = 12
-    num_cols = 16
+    print("Please enter the dimensions of the maze:")
+    num_cols = int(input("Columns "))
+    num_rows = int(input("Rows "))
+
     margin = 50
     screen_x = 800
     screen_y = 600
