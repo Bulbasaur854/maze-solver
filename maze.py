@@ -1,4 +1,4 @@
-import time
+import time, random
 from cell import Cell
 
 class Maze:
@@ -11,6 +11,7 @@ class Maze:
             cell_size_x,
             cell_size_y,
             win=None,
+            seed=None,
         ):
         self.__x1 = x1
         self.__y1 = y1
@@ -19,9 +20,12 @@ class Maze:
         self.__cell_size_x = cell_size_x
         self.__cell_size_y = cell_size_y
         self.__win = win
+        if seed:
+            random.seed(seed)
         self.__cells = []
         self.__create_cells()
         self.__break_entrance_and_exit()
+        self.__break_walls_r(0, 0)
 
     def __create_cells(self):
         for i in range(self.__num_cols):
@@ -51,3 +55,53 @@ class Maze:
         self.__draw_cell(0, 0)
         self.__cells[-1][-1].has_bottom_wall = False
         self.__draw_cell(len(self.__cells)-1, len(self.__cells[0])-1)
+
+    def __break_walls_r(self, i, j):
+        self.__cells[i][j].visited = True
+        while True:
+            need_to_visit = []
+            
+            # determine which cells to visit next
+            # left
+            if i > 0 and not self.__cells[i-1][j].visited:
+                need_to_visit.append((i-1, j))
+            # right
+            if i < self.__num_cols-1 and not self.__cells[i+1][j].visited:
+                need_to_visit.append((i+1, j))
+            # top
+            if j > 0 and not self.__cells[i][j-1].visited:
+                need_to_visit.append((i, j-1))            
+            # bottom
+            if j < self.__num_rows-1 and not self.__cells[i][j+1].visited:
+                need_to_visit.append((i, j+1))
+
+            # no cells to draw
+            if len(need_to_visit) == 0:
+                self.__draw_cell(i, j)
+                return
+            
+            # choose a random direction
+            direction_index = random.randrange(len(need_to_visit))
+            # get the next cell index to check
+            next_index = need_to_visit[direction_index]
+
+            # break walls between current cell and next one
+            # left
+            if next_index[0] == i - 1:
+                self.__cells[i][j].has_left_wall = False
+                self.__cells[i - 1][j].has_right_wall = False
+            # right
+            if next_index[0] == i + 1:
+                self.__cells[i][j].has_right_wall = False
+                self.__cells[i + 1][j].has_left_wall = False
+            # top
+            if next_index[1] == j - 1:
+                self.__cells[i][j].has_top_wall = False
+                self.__cells[i][j - 1].has_bottom_wall = False
+            # bottom
+            if next_index[1] == j + 1:
+                self.__cells[i][j].has_bottom_wall = False
+                self.__cells[i][j + 1].has_top_wall = False
+
+            # recursively visit the next cell
+            self.__break_walls_r(next_index[0], next_index[1])
