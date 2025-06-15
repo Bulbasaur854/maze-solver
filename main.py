@@ -4,12 +4,19 @@ from maze import Maze
 def main():
     MAX_CANVAS_WIDTH = 800
     MAX_CANVAS_HEIGHT = 600
-    MARGIN = 24                              
+    MARGIN = 24   
+    is_first_run = True                           
 
     while True:
-        print("Please enter the dimensions of the maze below: (recommended max is 32x32)")
-        cols = int(input("Columns "))
-        rows = int(input("Rows "))
+        if is_first_run:
+            print(
+"""
+Please enter the dimensions of the maze below. 
+-   Recommended maximum value for columns and rows is 32.
+-   After the maze is solved, you will need to close the window for the program to continue to run.""")
+
+        cols = int(input("\nColumns: "))
+        rows = int(input("Rows: "))
 
         cell_width = MAX_CANVAS_WIDTH // cols
         cell_height = MAX_CANVAS_HEIGHT // rows
@@ -24,10 +31,12 @@ def main():
 
         win.wait_for_close()  
         
-        cont = input("Want another one? (Y/N) ")
+        cont = input("\nWant another one? (Y/N) ")
         if cont.lower() == "n":
-            print("Closing program, bye bye :)")
+            print("\nClosing program\n")
             break
+        is_first_run = False
+        
 
 if __name__ == "__main__":
     main()
