@@ -3,10 +3,16 @@ from graphics import Window
 from maze import Maze
 
 def main():
+    MAX_CANVAS_WIDTH = 800
+    MAX_CANVAS_HEIGHT = 600
+
     print("Please enter the dimensions of the maze below, recommended max is 32x32:")
     COLS = int(input("Columns "))
     ROWS = int(input("Rows "))
-    CELL = int(input("Cell Size "))
+
+    cell_width = MAX_CANVAS_WIDTH // COLS
+    cell_height = MAX_CANVAS_HEIGHT // ROWS
+    CELL = min(cell_width, cell_height)
     MARGIN = 24                                 
 
     board_w = (COLS * CELL) + (MARGIN * 2)
