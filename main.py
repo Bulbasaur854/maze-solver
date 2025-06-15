@@ -3,11 +3,10 @@ from graphics import Window
 from maze import Maze
 
 def main():
-    print("Please enter the dimensions of the maze below (Max = 32x32)")
+    print("Please enter the dimensions of the maze below, recommended max is 32x32:")
     COLS = int(input("Columns "))
     ROWS = int(input("Rows "))
-
-    CELL = (COLS + ROWS) // 3
+    CELL = int(input("Cell Size "))
     MARGIN = 24                                 
 
     board_w = (COLS * CELL) + (MARGIN * 2)
