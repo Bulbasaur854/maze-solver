@@ -16,8 +16,6 @@ def main():
     btn = Button(win._Window__root, text="SOLVE", font=("Terminal", 10), command=maze.solve)
     btn.pack(pady=MARGIN)
 
-    maze.draw()
-
     win.wait_for_close()  
 
 if __name__ == "__main__":

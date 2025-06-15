@@ -7,7 +7,7 @@ class Window:
         self.__root.configure(bg="gray10")
         self.__board = Frame(self.__root, bg="gray10")
         self.__board.pack(fill="both", expand=True)
-        self.__canvas = Canvas(self.__board, bg="gray10", highlightthickness=0, height=board_h, width=board_w)
+        self.__canvas = Canvas(self.__board, bg="gray10", highlightthickness=0, bd=0, height=board_h, width=board_w)
         self.__canvas.pack()
         self.__running = False
         self.__root.protocol("WM_DELETE_WINDOW", self.close)
