@@ -41,7 +41,7 @@ class Maze:
         pos_y2 = pos_y1 + self.__cell_size_y
         self.__cells[i][j].draw(pos_x1, pos_y1, pos_x2, pos_y2)
         self.__animate()
-        time.sleep(0.01)
+        time.sleep(0.001)
 
     def __animate(self):
         if self.__win:

@@ -3,18 +3,19 @@ from graphics import Window
 from maze import Maze
 
 def main():
-    ROWS, COLS = 10, 10
-    CELL = 36 
+    print("Please enter the dimensions of the maze below (Max = 32x32)")
+    COLS = int(input("Columns "))
+    ROWS = int(input("Rows "))
+
+    CELL = (COLS + ROWS) // 3
     MARGIN = 24                                 
 
     board_w = (COLS * CELL) + (MARGIN * 2)
-    board_h = (ROWS * CELL) + MARGIN
+    board_h = (ROWS * CELL) + (MARGIN * 2)
     win  = Window(board_w, board_h)       
 
     maze = Maze(MARGIN, MARGIN, ROWS, COLS, CELL, CELL, win)
-
-    btn = Button(win._Window__root, text="SOLVE", font=("Terminal", 10), command=maze.solve)
-    btn.pack(pady=MARGIN)
+    maze.solve()
 
     win.wait_for_close()  
 
