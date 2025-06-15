@@ -12,7 +12,7 @@ def main():
             print_intro()
 
         try:
-            cols = int(input("Columns: "))
+            cols = int(input("\nColumns: "))
             rows = int(input("Rows: "))
         except ValueError:
             print("Error: Please enter valid integers.\n")
