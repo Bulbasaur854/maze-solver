@@ -1,11 +1,14 @@
-from tkinter import Tk, BOTH, Canvas
+from tkinter import Tk, Frame, Canvas
 
 class Window:
-    def __init__(self, width, height):
+    def __init__(self, board_w, board_h):
         self.__root = Tk()
         self.__root.title("Maze Solver")
-        self.__canvas = Canvas(self.__root, bg="gray10", height=height, width=width)
-        self.__canvas.pack(fill=BOTH, expand=1)
+        self.__root.configure(bg="gray10")
+        self.__board = Frame(self.__root, bg="gray10")
+        self.__board.pack(fill="both", expand=True)
+        self.__canvas = Canvas(self.__board, bg="gray10", highlightthickness=0, height=board_h, width=board_w)
+        self.__canvas.pack()
         self.__running = False
         self.__root.protocol("WM_DELETE_WINDOW", self.close)
 

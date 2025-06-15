@@ -23,10 +23,6 @@ class Maze:
         if seed:
             random.seed(seed)
         self.__cells = []
-        self.__create_cells()
-        self.__break_entrance_and_exit()
-        self.__break_walls_r(0, 0)
-        self.__reset_cells_visited()
 
     def __create_cells(self):
         for i in range(self.__num_cols):
@@ -152,6 +148,11 @@ class Maze:
 
         return False
 
+    def draw(self):
+        self.__create_cells()
+        self.__break_entrance_and_exit()
+        self.__break_walls_r(0, 0)
+        self.__reset_cells_visited()
 
     def solve(self):
         return self.__solve_r(0, 0)
