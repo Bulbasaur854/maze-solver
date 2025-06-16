@@ -29,7 +29,7 @@ def main():
         board_h = (rows * cell_size) + (MARGIN * 2)
         win = Window(board_w, board_h)       
 
-        maze = Maze(MARGIN, MARGIN, rows, cols, cell_size, cell_size, win, 10)
+        maze = Maze(MARGIN, MARGIN, rows, cols, cell_size, cell_size, win)
         maze.solve(algo)
 
         win.wait_for_close()  
