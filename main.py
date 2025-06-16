@@ -29,13 +29,13 @@ def main():
         board_h = (rows * cell_size) + (MARGIN * 2)
         win = Window(board_w, board_h)       
 
-        maze = Maze(MARGIN, MARGIN, rows, cols, cell_size, cell_size, win)
+        maze = Maze(MARGIN, MARGIN, rows, cols, cell_size, cell_size, win, 10)
         maze.solve(algo)
 
         win.wait_for_close()  
 
         # get user input for looping the program
-        cont = input("\nGenerate another maze? (Y/N): ")
+        cont = input("\nGenerate another maze? (y/n): ")
         if cont.strip().lower() == "n":
             print_closing()
             break
@@ -60,6 +60,7 @@ def get_algorithm():
 What algorithm to use for the solution?
 
     1) Depth First Search
+    2) Breadth First Search
 
 Enter the number of your choice.
 """)

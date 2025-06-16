@@ -114,6 +114,9 @@ class Maze:
             for cell in column:
                 cell.visited = False
 
+    # ============================================================
+    #                   SOLUTION ALGORITHMS
+    # ============================================================
     # solving recursively using depth-first 
     def __solve_dfs_r(self, i, j):
         self.__animate()
@@ -154,10 +157,74 @@ class Maze:
 
         return False
 
+    def __solve_bfs(self):
+        came_from = {}
+        start = (0, 0)
+        goal = (self.__num_cols - 1, self.__num_rows - 1)
+
+        queue = [start]
+        self.__cells[start[0]][start[1]].visited = True
+
+        while queue:
+            i, j = queue.pop(0)
+
+            # reached the goal
+            if (i, j) == goal:
+                break  
+
+            # get valid neighbors
+            neighbors = []
+            # left
+            if i > 0 and not self.__cells[i][j].has_left_wall and not self.__cells[i - 1][j].visited:
+                neighbors.append((i - 1, j))
+            # right
+            if i < self.__num_cols - 1 and not self.__cells[i][j].has_right_wall and not self.__cells[i + 1][j].visited:
+                neighbors.append((i + 1, j))
+            # top
+            if j > 0 and not self.__cells[i][j].has_top_wall and not self.__cells[i][j - 1].visited:
+                neighbors.append((i, j - 1))
+            # bottom
+            if j < self.__num_rows - 1 and not self.__cells[i][j].has_bottom_wall and not self.__cells[i][j + 1].visited:
+                neighbors.append((i, j + 1))
+
+            # handle each valid neighbor
+            for ni, nj in neighbors:
+                if not self.__cells[ni][nj].visited:
+                    queue.append((ni, nj))
+                    came_from[(ni, nj)] = (i, j)
+                    self.__cells[ni][nj].visited = True
+                    self.__cells[i][j].draw_move(self.__cells[ni][nj], True)
+                    self.__animate()
+
+        self.__reconstruct_path(came_from, start, goal)
+
+    def __reconstruct_path(self, came_from, start, goal):
+        current = goal
+        path = []
+
+        # traverse `came_from` backwards, from goal to start
+        while current != start:
+            prev = came_from.get(current)
+            if prev is None:
+                print("No path found.")
+                return
+            path.append((prev, current))
+            current = prev
+
+        # draw the final path forward
+        for from_pos, to_pos in reversed(path):
+            from_cell = self.__cells[from_pos[0]][from_pos[1]]
+            to_cell = self.__cells[to_pos[0]][to_pos[1]]
+            from_cell.draw_move(to_cell)
+            self.__animate()
+
     def solve(self, algo):
         match algo:
             case 1:            
                 self.__draw()
                 return self.__solve_dfs_r(0, 0)
+            case 2:
+                self.__draw()
+                self.__solve_bfs()
             case _:
                 print("Unknown algorithm choice!")
