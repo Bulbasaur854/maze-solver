@@ -47,6 +47,12 @@ class Maze:
         if self.__win:
             self.__win.redraw()
 
+    def __draw(self):
+        self.__create_cells()
+        self.__break_entrance_and_exit()
+        self.__break_walls_r(0, 0)
+        self.__reset_cells_visited()
+
     def __break_entrance_and_exit(self):
         self.__cells[0][0].has_top_wall = False
         self.__draw_cell(0, 0)
@@ -109,7 +115,7 @@ class Maze:
                 cell.visited = False
 
     # solving recursively using depth-first 
-    def __solve_r(self, i, j):
+    def __solve_dfs_r(self, i, j):
         self.__animate()
         self.__cells[i][j].visited = True
 
@@ -120,40 +126,38 @@ class Maze:
         # left
         if (i > 0 and not self.__cells[i][j].has_left_wall and not self.__cells[i-1][j].visited):
             self.__cells[i][j].draw_move(self.__cells[i-1][j])
-            if self.__solve_r(i-1, j):
+            if self.__solve_dfs_r(i-1, j):
                 return True
             else:
                 self.__cells[i][j].draw_move(self.__cells[i-1][j], True)
         # right
         if (i < self.__num_cols-1 and not self.__cells[i][j].has_right_wall and not self.__cells[i+1][j].visited):
             self.__cells[i][j].draw_move(self.__cells[i+1][j])
-            if self.__solve_r(i+1, j):
+            if self.__solve_dfs_r(i+1, j):
                 return True
             else:
                 self.__cells[i][j].draw_move(self.__cells[i+1][j], True)
         # top
         if (j > 0 and not self.__cells[i][j].has_top_wall and not self.__cells[i][j-1].visited):
             self.__cells[i][j].draw_move(self.__cells[i][j-1])
-            if self.__solve_r(i, j-1):
+            if self.__solve_dfs_r(i, j-1):
                 return True
             else:
                 self.__cells[i][j].draw_move(self.__cells[i][j-1], True)
         # bottom
         if (j < self.__num_rows-1 and not self.__cells[i][j].has_bottom_wall and not self.__cells[i][j+1].visited):
             self.__cells[i][j].draw_move(self.__cells[i][j+1])
-            if self.__solve_r(i, j+1):
+            if self.__solve_dfs_r(i, j+1):
                 return True
             else:
                 self.__cells[i][j].draw_move(self.__cells[i][j+1], True)
 
         return False
 
-    def __draw(self):
-        self.__create_cells()
-        self.__break_entrance_and_exit()
-        self.__break_walls_r(0, 0)
-        self.__reset_cells_visited()
-
-    def solve(self):
-        self.__draw()
-        return self.__solve_r(0, 0)
+    def solve(self, algo):
+        match algo:
+            case 1:            
+                self.__draw()
+                return self.__solve_dfs_r(0, 0)
+            case _:
+                print("Unknown algorithm choice!")
